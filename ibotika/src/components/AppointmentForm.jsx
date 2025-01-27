@@ -192,6 +192,7 @@ const AppointmentForm = () => {
                 onChange={handleInputChange}
                 required
                 className="w-full"
+                min={new Date().toISOString().split("T")[0]} // Sets today's date as the minimum
               />
             </div>
             <div className="space-y-2">
@@ -207,7 +208,12 @@ const AppointmentForm = () => {
                 onChange={handleInputChange}
                 required
                 className="w-full"
-                min="10:00"
+                min={formData.date === new Date().toISOString().split('T')[0]
+                  ? new Date().toTimeString().split(':').slice(0, 2).join(':') > "10:00"
+                    ? new Date().toTimeString().split(':').slice(0, 2).join(':')
+                    : "10:00"
+                  : "10:00"} // Dynamically sets the minimum time to now or 10:00 AM
+                max="18:00" // Sets the latest time to 6:00 PM
               />
             </div>
           </div>
